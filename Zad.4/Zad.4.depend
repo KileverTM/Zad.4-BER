@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1655061698 source:c:\users\jakub\documents\github\zad.4-ber\zad.4\main.cpp
+	<iostream>
+	<fstream>
+	<algorithm>
+	<stdint.h>
+	<vector>
+	<bitset>
+	<ctime>
+	<iomanip>
+	<chrono>
+	<time.h>
+
