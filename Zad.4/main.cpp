@@ -12,6 +12,7 @@
 #include <unistd.h>
 
 using namespace std;
+using namespace std::chrono;
 void createFile1(const std::string name, const int count, const char value)
 {
     std::fstream f;
@@ -40,6 +41,8 @@ void calculateBer(const char* test1_file1, const char* test1_file2)
     ifstream f1 (test1_file1,std::ios::binary );
     ifstream f2 (test1_file2,std::ios::binary );
     ofstream log;
+    clock_t start,stop;
+    double timeLicz;
 log.open("log.txt", ios_base::app);
     time_t czas;
     struct tm * ptr;
@@ -52,6 +55,7 @@ log.open("log.txt", ios_base::app);
   float  resultsber = 0;
    float resultserr = 0;
    float resultstot = 0;
+
 
 
  time( & czas );
@@ -69,19 +73,22 @@ log<<data<<"Otwarcie pierwszego pliku "<<endl;
     char a{};
     char b{};
 
+start = clock();
 
     while (!f1.eof())
     {
         f1 >> a; //read 1 char from file 1
         f2 >> b; //read 1 char from file 2
-        cout<<"liczenie BER"<<endl;
+
         if (f1.eof()) {break;} // till the end of the 1st file
 
             resultserr += hammingDistance(a, b); //add to the .err the number of different bits
-            cout<<"Kalkulowanie BER"<<endl;
+
             resultstot += 8; //add to the .tot the number of compared bits
 
     }
+stop = clock();
+
 time( & czas );
     ptr = localtime( & czas );
      data = asctime( ptr );
@@ -89,8 +96,17 @@ time( & czas );
 
     resultsber = resultserr / resultstot; // calculate ber
 log<<data<<" Wynik BER: "<<resultsber<<endl;
+cout<<"Wynik BER : "<<resultsber<<endl;
+log<<data<<"Iosc porownanych bitow : "<<resultstot<<endl;
+cout<<"Iosc porownanych bitow : "<<resultstot<<endl;
+log<<data<<"Iosc blednych bitow : "<<resultserr<<endl;
+cout<<"Iosc blednych bitow : "<<resultserr<<endl;
 
 
+timeLicz =(double)(stop-start)/ CLOCKS_PER_SEC;
+log<<data<<" Czas wymagany na polieczenie bledu : "<<timeLicz<<endl;
+cout<<" Czas wymagany na polieczenie bledu : "<<timeLicz<<setprecision(9)<<endl;
+cout<<endl;
 }
 
 
@@ -141,8 +157,8 @@ createFile1("test2_file2.bin", 100, 0x5F);
     log<<data<<"  Stworzenie 4 pliku testowego"<<endl;
 
 
-/*
-createFile1("test3_file1.bin", 420000000, 0x55);
+
+createFile1("test3_file1.bin", 419430400, 0x55);
     time( & czas );
     ptr = localtime( & czas );
      data = asctime( ptr );
@@ -152,15 +168,17 @@ createFile1("test3_file1.bin", 420000000, 0x55);
 
 
 
-createFile1("test3_file2.bin", 420000000, 0x50);
+createFile1("test3_file2.bin", 419430400, 0x50);
     time( & czas );
     ptr = localtime( & czas );
      data = asctime( ptr );
      log<<endl;
      cout<<"Stworzenie pliku 6"<<endl;
     log<<data<<"  Stworzenie 6 pliku testowego"<<endl;
-*/
+
+calculateBer("test1_file1.bin","test1_file2.bin");
 calculateBer("test2_file1.bin","test2_file2.bin");
+calculateBer("test3_file1.bin","test3_file2.bin");
 
 }
 
