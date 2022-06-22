@@ -12,7 +12,7 @@
 #include <unistd.h>
 
 using namespace std;
-using namespace std::chrono;
+
 void createFile1(const std::string name, const int count, const char value)
 {
     std::fstream f;
@@ -96,15 +96,21 @@ time( & czas );
 
     resultsber = resultserr / resultstot; // calculate ber
 log<<data<<" Wynik BER: "<<resultsber<<endl;
+log<<endl;
 cout<<"Wynik BER : "<<resultsber<<endl;
+
 log<<data<<"Iosc porownanych bitow : "<<resultstot<<endl;
+log<<endl;
 cout<<"Iosc porownanych bitow : "<<resultstot<<endl;
+
 log<<data<<"Iosc blednych bitow : "<<resultserr<<endl;
+log<<endl;
 cout<<"Iosc blednych bitow : "<<resultserr<<endl;
 
 
 timeLicz =(double)(stop-start)/ CLOCKS_PER_SEC;
 log<<data<<" Czas wymagany na polieczenie bledu : "<<timeLicz<<endl;
+log<<endl;
 cout<<" Czas wymagany na polieczenie bledu : "<<timeLicz<<setprecision(9)<<endl;
 cout<<endl;
 }
@@ -119,6 +125,10 @@ time_t czas;
     time( & czas );
     ptr = localtime( & czas );
     char * data = asctime( ptr );
+
+    log <<"Link do Repozytorim na GitHub Jakub Strzalka"<<endl;
+log<<"https://github.com/KileverTM/Zad.4-BER"<<endl;
+log<<endl;
 
 log <<data<<":  Uruchomieie programu"<<endl;
 
@@ -175,6 +185,8 @@ createFile1("test3_file2.bin", 419430400, 0x50);
      log<<endl;
      cout<<"Stworzenie pliku 6"<<endl;
     log<<data<<"  Stworzenie 6 pliku testowego"<<endl;
+log<<endl;
+cout<<endl;
 
 calculateBer("test1_file1.bin","test1_file2.bin");
 calculateBer("test2_file1.bin","test2_file2.bin");
